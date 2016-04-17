@@ -27,7 +27,7 @@ public class YahooFinancialCSVFileDownloader {
     private String nameOfSecurity;
     private String fromDate;
     private String toDate;
-    private ArrayList<GregorianCalendar> dates;
+    private ArrayList<String> dates;
     private ArrayList<Double> openingPrices;
     private ArrayList<Double> highestPrices;
     private ArrayList<Double> lowestPrices;
@@ -39,15 +39,23 @@ public class YahooFinancialCSVFileDownloader {
         this.nameOfSecurity = mNameOfSecurity;
         this.fromDate = mFromDate;
         this.toDate = mToDate;
+
+        this.dates = new ArrayList<>();
+        this.openingPrices = new ArrayList<>();
+        this.highestPrices = new ArrayList<>();
+        this.lowestPrices = new ArrayList<>();
+        this.closingPrices = new ArrayList<>();
+        this.volumes = new ArrayList<>();
+        this.adjustedClosingPrices = new ArrayList<>();
     }
 
     private String prepareDownloadUrl() {
 
-        GregorianCalendar gregorianFromDate = GregorianCalendarParser.parseStringToGregorianCalendar(this.fromDate);
-        GregorianCalendar gregorianToDate = GregorianCalendarParser.parseStringToGregorianCalendar(this.toDate);
+        GregorianCalendar gregorianFromDate = GregorianCalendarParser.parseStringToGregorianCalendar(this.getFromDate());
+        GregorianCalendar gregorianToDate = GregorianCalendarParser.parseStringToGregorianCalendar(this.getToDate());
 
         String url = "http://ichart.finance.yahoo.com/table.csv?"
-                + "s=" + nameOfSecurity
+                + "s=" + getNameOfSecurity()
                 + "&a=" + gregorianFromDate.get(Calendar.MONTH)
                 + "&b=" + gregorianFromDate.get(Calendar.DAY_OF_MONTH)
                 + "&c=" + gregorianFromDate.get(Calendar.YEAR)
@@ -59,19 +67,40 @@ public class YahooFinancialCSVFileDownloader {
         return url;
     }
 
-    public void downloadCsvFile() {
+    public YahooFinancialSecurity downloadCsvFileFromYahooFinancial() {
 
+        YahooFinancialSecurity securityReport = new YahooFinancialSecurity();
         String downloadUrlAsString = prepareDownloadUrl();
         try {
             URL urlForDownloadCsvFile = new URL(downloadUrlAsString);
             URLConnection connectionForCsvFileDownload = urlForDownloadCsvFile.openConnection();
             InputStream csvFileInputStream = connectionForCsvFileDownload.getInputStream();
-            Scanner csvFileData = new Scanner(csvFileInputStream);
+            Scanner csvFileScanner = new Scanner(csvFileInputStream);
+            //csvFileScanner.useDelimiter(",");
+            //csvFileScanner.useDelimiter("\n");
 
-            csvFileData.nextLine(); // read header line
+            csvFileScanner.nextLine(); // read header line
 
-            while (csvFileData.hasNext()) {
-                System.out.println(csvFileData.nextLine()); //read next line in the csv file
+            while (csvFileScanner.hasNext()) { //read next line in the csv file
+                String line = csvFileScanner.nextLine();
+                String[] fieldsInThisLine = line.split(",");
+                String date = fieldsInThisLine[0];
+                this.dates.add(date);
+                Double openingPrice = Double.parseDouble(fieldsInThisLine[1]);
+                this.openingPrices.add(openingPrice);
+                Double highestPrice = Double.parseDouble(fieldsInThisLine[2]);
+                this.highestPrices.add(highestPrice);
+                Double lowestPrice = Double.parseDouble(fieldsInThisLine[3]);
+                this.lowestPrices.add(lowestPrice);
+                Double closingPrice = Double.parseDouble(fieldsInThisLine[4]);
+                this.closingPrices.add(closingPrice);
+                Long volume = Long.parseLong(fieldsInThisLine[5]);
+                this.volumes.add(volume);
+                Double adjustedClosingPrice = Double.parseDouble(fieldsInThisLine[6]);
+                this.adjustedClosingPrices.add(adjustedClosingPrice);
+                securityReport.addOneDayToDailySecurity(date, openingPrice,
+                        highestPrice, lowestPrice, closingPrice,
+                        volume, adjustedClosingPrice);
             }
 
         } catch (MalformedURLException ex) {
@@ -79,5 +108,76 @@ public class YahooFinancialCSVFileDownloader {
         } catch (IOException ex) {
             Logger.getLogger(YahooFinancialCSVFileDownloader.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return securityReport;
+    }
+
+    /**
+     * @return the nameOfSecurity
+     */
+    public String getNameOfSecurity() {
+        return nameOfSecurity;
+    }
+
+    /**
+     * @return the fromDate
+     */
+    public String getFromDate() {
+        return fromDate;
+    }
+
+    /**
+     * @return the toDate
+     */
+    public String getToDate() {
+        return toDate;
+    }
+
+    /**
+     * @return the dates
+     */
+    public ArrayList<String> getDates() {
+        return dates;
+    }
+
+    /**
+     * @return the openingPrices
+     */
+    public ArrayList<Double> getOpeningPrices() {
+        return openingPrices;
+    }
+
+    /**
+     * @return the highestPrices
+     */
+    public ArrayList<Double> getHighestPrices() {
+        return highestPrices;
+    }
+
+    /**
+     * @return the lowestPrices
+     */
+    public ArrayList<Double> getLowestPrices() {
+        return lowestPrices;
+    }
+
+    /**
+     * @return the closingPrices
+     */
+    public ArrayList<Double> getClosingPrices() {
+        return closingPrices;
+    }
+
+    /**
+     * @return the volumes
+     */
+    public ArrayList<Long> getVolumes() {
+        return volumes;
+    }
+
+    /**
+     * @return the adjustedClosingPrices
+     */
+    public ArrayList<Double> getAdjustedClosingPrices() {
+        return adjustedClosingPrices;
     }
 }

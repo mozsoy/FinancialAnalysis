@@ -2,9 +2,11 @@
 import FileReaders.IniFileReader;
 import FileReaders.SecuritiesIniFileParser;
 import FinancialAPIs.YahooFinancialCSVFileDownloader;
+import FinancialCalculators.FinancialCalculator;
 import Securities.Security;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -20,9 +22,15 @@ import javax.swing.JFrame;
  * @author metehan
  */
 public class CumulativeReturnAnalysis {
-
+    
+    private String iniFilePath;
+    HashMap<String, Security> securitiesMap;
+    ArrayList<Double> adjustedClosingPrices;
+    
     public static void main(String[] args) {
-
+        
+        CumulativeReturnAnalysis myReturnAnalysis = new CumulativeReturnAnalysis();
+        
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JButton button = new JButton("Select file");
@@ -32,9 +40,15 @@ public class CumulativeReturnAnalysis {
                 JFileChooser fileChooser = new JFileChooser();
                 int returnValue = fileChooser.showOpenDialog(null);
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-                    IniFileReader myIniFileReader = new IniFileReader(filePath);
-                    myIniFileReader.readSecuritiesFromIniFile();
+                    myReturnAnalysis.iniFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+                    SecuritiesIniFileParser iniFileParser = new SecuritiesIniFileParser(myReturnAnalysis.iniFilePath);
+                    myReturnAnalysis.securitiesMap = iniFileParser.readSecuritiesFromIniFile();
+                    
+                    for (String securityName : myReturnAnalysis.securitiesMap.keySet()) {
+                        YahooFinancialCSVFileDownloader downloader = new YahooFinancialCSVFileDownloader(securityName, "20151101", "20151109");
+                        downloader.downloadCsvFileFromYahooFinancial();
+                        myReturnAnalysis.adjustedClosingPrices = downloader.getAdjustedClosingPrices();
+                    }
                     frame.setVisible(false);
                     frame.dispose();
                 }
@@ -44,12 +58,5 @@ public class CumulativeReturnAnalysis {
         frame.setSize(300, 120);
         frame.setLocation(800, 400);
         frame.setVisible(true);
-
-        YahooFinancialCSVFileDownloader downloader = new YahooFinancialCSVFileDownloader("SPY", "20151101", "20151109");
-        downloader.downloadCsvFile();
-
-        SecuritiesIniFileParser iniFileParser = new SecuritiesIniFileParser("config.ini");
-        HashMap<String, Security> securitiesMap = iniFileParser.readSecuritiesFromIniFile();
-        // System.out.println(securitiesMap.get("UCO").toString());
     }
 }
