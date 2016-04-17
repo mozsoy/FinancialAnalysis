@@ -35,18 +35,17 @@ public class YahooFinancialCSVFileDownloader {
     private ArrayList<Long> volumes;
     private ArrayList<Double> adjustedClosingPrices;
 
-    //private String downloadUrl;
+    public YahooFinancialCSVFileDownloader(String mNameOfSecurity, String mFromDate, String mToDate) {
+        this.nameOfSecurity = mNameOfSecurity;
+        this.fromDate = mFromDate;
+        this.toDate = mToDate;
+    }
 
-     public YahooFinancialCSVFileDownloader(String mNameOfSecurity, String mFromDate, String mToDate) {
-         this.nameOfSecurity = mNameOfSecurity;
-         this.fromDate = mFromDate;
-         this.toDate = mToDate;
-     } 
     private String prepareDownloadUrl() {
 
         GregorianCalendar gregorianFromDate = GregorianCalendarParser.parseStringToGregorianCalendar(this.fromDate);
         GregorianCalendar gregorianToDate = GregorianCalendarParser.parseStringToGregorianCalendar(this.toDate);
-        
+
         String url = "http://ichart.finance.yahoo.com/table.csv?"
                 + "s=" + nameOfSecurity
                 + "&a=" + gregorianFromDate.get(Calendar.MONTH)
@@ -60,7 +59,7 @@ public class YahooFinancialCSVFileDownloader {
         return url;
     }
 
-    public void openConnectionForCsvFileDownload() {
+    public void downloadCsvFile() {
 
         String downloadUrlAsString = prepareDownloadUrl();
         try {
@@ -69,10 +68,10 @@ public class YahooFinancialCSVFileDownloader {
             InputStream csvFileInputStream = connectionForCsvFileDownload.getInputStream();
             Scanner csvFileData = new Scanner(csvFileInputStream);
 
-            csvFileData.nextLine();
+            csvFileData.nextLine(); // read header line
 
             while (csvFileData.hasNext()) {
-                System.out.println(csvFileData.nextLine());
+                System.out.println(csvFileData.nextLine()); //read next line in the csv file
             }
 
         } catch (MalformedURLException ex) {
@@ -80,6 +79,5 @@ public class YahooFinancialCSVFileDownloader {
         } catch (IOException ex) {
             Logger.getLogger(YahooFinancialCSVFileDownloader.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 }
