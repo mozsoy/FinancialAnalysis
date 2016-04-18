@@ -3,6 +3,7 @@ import FileReaders.IniFileReader;
 import FileReaders.SecuritiesIniFileParser;
 import FinancialAPIs.YahooFinancialCSVFileDownloader;
 import FinancialCalculators.FinancialCalculator;
+import GraphingTools.GraphPlotter;
 import Securities.Security;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,6 +49,8 @@ public class CumulativeReturnAnalysis {
                         YahooFinancialCSVFileDownloader downloader = new YahooFinancialCSVFileDownloader(securityName, "20151101", "20151109");
                         downloader.downloadCsvFileFromYahooFinancial();
                         myReturnAnalysis.adjustedClosingPrices = downloader.getAdjustedClosingPrices();
+                        GraphPlotter plotter = new GraphPlotter(myReturnAnalysis.adjustedClosingPrices);
+                        plotter.createAndShowGui();
                     }
                     frame.setVisible(false);
                     frame.dispose();
