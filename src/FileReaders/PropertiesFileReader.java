@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author metehan
  */
-public class IniFileReader {
+public class PropertiesFileReader {
 
     private FileInputStream iniFileInputStream;
     private String iniFilePath;
@@ -35,13 +35,13 @@ public class IniFileReader {
      *
      * @param path the absolute path of the INI file.
      */
-    public IniFileReader(String path) {
+    public PropertiesFileReader(String path) {
         try {
             this.iniFilePath = path;
             this.iniFileInputStream = new FileInputStream(path);
             this.iniFileProperties = new Properties();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(IniFileReader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PropertiesFileReader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -60,7 +60,7 @@ public class IniFileReader {
             System.out.println(FROM + " " + this.iniFileProperties.getProperty(FROM));
             System.out.println(TO + " " + this.iniFileProperties.getProperty(TO));
         } catch (IOException ex) {
-            Logger.getLogger(IniFileReader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PropertiesFileReader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
