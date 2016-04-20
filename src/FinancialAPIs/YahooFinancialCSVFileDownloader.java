@@ -14,6 +14,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * The YahooFinancialCSVFileDownloader class downloads a csv file from Yahoo
+ * Financial Web Site consisting of the information regarding a security between
+ * the dates specified. The csv file contains the following information of the
+ * security: Name of The Security, Starting Date, Ending Date, Opening Prices,
+ * Highest Prices, Lowest Prices, Closing Prices, Volumes and Adjusted Closing
+ * Prices.
  *
  * @author metehan
  */
@@ -30,6 +36,13 @@ public class YahooFinancialCSVFileDownloader {
     private ArrayList<Long> volumes;
     private ArrayList<Double> adjustedClosingPrices;
 
+    /**
+     * Constructs a YahooFinancialCSVFileDownloader object
+     *
+     * @param mNameOfSecurity name of the security
+     * @param mFromDate starting date
+     * @param mToDate ending date
+     */
     public YahooFinancialCSVFileDownloader(String mNameOfSecurity, String mFromDate, String mToDate) {
         this.nameOfSecurity = mNameOfSecurity;
         this.fromDate = mFromDate;
@@ -44,10 +57,17 @@ public class YahooFinancialCSVFileDownloader {
         this.adjustedClosingPrices = new ArrayList<>();
     }
 
+    /**
+     * Prepares a string representation of the url that downloads the csv file
+     *
+     * @return a string representation of the url that downloads the csv file
+     */
     private String prepareDownloadUrl() {
 
-        GregorianCalendar gregorianFromDate = GregorianCalendarParser.parseStringToGregorianCalendar(this.getFromDate());
-        GregorianCalendar gregorianToDate = GregorianCalendarParser.parseStringToGregorianCalendar(this.getToDate());
+        GregorianCalendar gregorianFromDate = GregorianCalendarParser
+                .parseStringToGregorianCalendar(this.getFromDate());
+        GregorianCalendar gregorianToDate = GregorianCalendarParser
+                .parseStringToGregorianCalendar(this.getToDate());
 
         String url = "http://ichart.finance.yahoo.com/table.csv?"
                 + "s=" + getNameOfSecurity()
@@ -62,17 +82,22 @@ public class YahooFinancialCSVFileDownloader {
         return url;
     }
 
+    /**
+     * Downloads the csv file
+     *
+     * @return a YahooFinancialSecurity object
+     */
     public YahooFinancialSecurity downloadCsvFileFromYahooFinancial() {
 
         YahooFinancialSecurity securityReport = new YahooFinancialSecurity();
         String downloadUrlAsString = prepareDownloadUrl();
         try {
             URL urlForDownloadCsvFile = new URL(downloadUrlAsString);
-            URLConnection connectionForCsvFileDownload = urlForDownloadCsvFile.openConnection();
-            InputStream csvFileInputStream = connectionForCsvFileDownload.getInputStream();
+            URLConnection connectionForCsvFileDownload
+                    = urlForDownloadCsvFile.openConnection();
+            InputStream csvFileInputStream
+                    = connectionForCsvFileDownload.getInputStream();
             Scanner csvFileScanner = new Scanner(csvFileInputStream);
-            //csvFileScanner.useDelimiter(",");
-            //csvFileScanner.useDelimiter("\n");
 
             csvFileScanner.nextLine(); // read header line
 

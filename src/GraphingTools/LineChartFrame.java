@@ -72,7 +72,6 @@ public class LineChartFrame<Object> extends JFrame {
                 // Defining data series
                 XYChart.Series series = new XYChart.Series();
                 for (int i = 0; i < dataPoints.size(); i++) {
-                    System.out.println(dataPoints.get(i));
                     series.getData().add(new XYChart.Data(String.valueOf(i + 1), dataPoints.get(i)));
                 }
                 series.setName("Data Point");

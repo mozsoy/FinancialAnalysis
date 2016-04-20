@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package FileReaders;
 
 import Securities.Security;
@@ -14,12 +9,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * The SecuritiesIniFileParser class parses an INI file of securities into a
+ * HashMap<name of the security, security>.
  *
  * @author metehan
  */
 public class SecuritiesIniFileParser {
 
-    private String iniFilePath;
+    private String iniFilePath; // Path for the INI file
 
     /**
      * Constructs an SecuritiesIniFileParser object for the INI file at the
@@ -32,7 +29,9 @@ public class SecuritiesIniFileParser {
     }
 
     /**
-     * Reads and returns a HashMap of the securities in the INI file.
+     * Reads the INI file.
+     *
+     * @return a HashMap of the securities in the INI file.
      */
     public HashMap<String, Security> readSecuritiesFromIniFile() {
         HashMap<String, Security> securitiesMap = new HashMap<>();
