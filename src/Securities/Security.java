@@ -1,12 +1,8 @@
 package Securities;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
- *
+ * The Security class implements a security as a financial instrument
+ * .
  * @author metehan
  */
 public class Security {
@@ -16,8 +12,7 @@ public class Security {
     private String toDate;
 
     /**
-     * Constructs a Security object with the specified name, from the date
-     * mFromDate to date mToDate.
+     * Constructs a Security object
      *
      * @param mName the name of the security.
      * @param mFromDate the starting date of the security
@@ -71,6 +66,10 @@ public class Security {
         this.toDate = toDate;
     }
 
+    /**
+     *
+     * @return a string representation of this security
+     */
     @Override
     public String toString() {
         String securityAsString = "Name of Security: " + this.name

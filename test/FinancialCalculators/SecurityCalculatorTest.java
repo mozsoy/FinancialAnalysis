@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package FinancialCalculators;
 
 import java.util.ArrayList;
@@ -14,14 +9,16 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * JUnit Test class for FinancialCalculators.SecurityCalculator.java
  *
  * @author metehan
  */
-public class FinancialCalculatorTest {
+public class SecurityCalculatorTest {
 
+    // Degree to which two double numbers are accepted as equal.
     private final static double DELTA = 1e-10;
 
-    public FinancialCalculatorTest() {
+    public SecurityCalculatorTest() {
     }
 
     @BeforeClass
@@ -41,7 +38,8 @@ public class FinancialCalculatorTest {
     }
 
     /**
-     * Test of calculateReturn method, of class FinancialCalculator. Test Case 1
+     * Test of calculateReturn method, of class FinancialCalculator. 
+     * Test Case 1
      */
     @Test
     public void testCalculateReturnCase1() {
@@ -49,12 +47,13 @@ public class FinancialCalculatorTest {
         Double currentPrice = 1.00;
         Double originalPrice = 1.00;
         Double expResult = 0.00;
-        Double result = FinancialCalculator.calculateReturn(currentPrice, originalPrice);
+        Double result = SecurityCalculator.calculateReturn(currentPrice, originalPrice);
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of calculateReturn method, of class FinancialCalculator. Test Case 2
+     * Test of calculateReturn method, of class FinancialCalculator. 
+     * Test Case 2
      */
     @Test
     public void testCalculateReturnCase2() {
@@ -62,13 +61,14 @@ public class FinancialCalculatorTest {
         Double currentPrice = 15.84;
         Double originalPrice = 10.56;
         Double expResult = 0.50;
-        Double result = FinancialCalculator.calculateReturn(currentPrice, originalPrice);
+        Double result = SecurityCalculator.calculateReturn(currentPrice, originalPrice);
         assertEquals(expResult, result, DELTA);
 
     }
 
     /**
-     * Test of calculateReturn method, of class FinancialCalculator. Test Case 2
+     * Test of calculateReturn method, of class FinancialCalculator. 
+     * Test Case 3
      */
     @Test
     public void testCalculateReturnCase3() {
@@ -76,14 +76,14 @@ public class FinancialCalculatorTest {
         Double currentPrice = 3.45;
         Double originalPrice = 6.76;
         Double expResult = -0.489644970414;
-        Double result = FinancialCalculator.calculateReturn(currentPrice, originalPrice);
+        Double result = SecurityCalculator.calculateReturn(currentPrice, originalPrice);
         assertEquals(expResult, result, DELTA);
 
     }
 
     /**
      * Test of calculateCumulativeReturn method, of class FinancialCalculator.
-     * Case 1
+     * Test Case 1
      */
     @Test
     public void testCalculateCumulativeReturnCase1() {
@@ -96,10 +96,14 @@ public class FinancialCalculatorTest {
         expResult.add(0.00);
         expResult.add(0.00);
         expResult.add(0.00);
-        ArrayList<Double> result = FinancialCalculator.calculateCumulativeReturn(adjustedClosingPrices);
+        ArrayList<Double> result = SecurityCalculator.calculateCumulativeReturn(adjustedClosingPrices);
         assertEquals(expResult, result);
     }
 
+    /**
+     * Test of calculateCumulativeReturn method, of class FinancialCalculator.
+     * Test Case 2
+     */
     @Test
     public void testCalculateCumulativeReturnCase2() {
         System.out.println("calculateCumulativeReturn");
@@ -107,10 +111,14 @@ public class FinancialCalculatorTest {
         adjustedClosingPrices.add(5.00);
         ArrayList<Double> expResult = new ArrayList<>();
         expResult.add(0.00);
-        ArrayList<Double> result = FinancialCalculator.calculateCumulativeReturn(adjustedClosingPrices);
+        ArrayList<Double> result = SecurityCalculator.calculateCumulativeReturn(adjustedClosingPrices);
         assertEquals(expResult, result);
     }
 
+    /**
+     * Test of calculateCumulativeReturn method, of class FinancialCalculator.
+     * Test Case 3
+     */
     @Test
     public void testCalculateCumulativeReturnCase3() {
         System.out.println("calculateCumulativeReturn");
@@ -122,10 +130,14 @@ public class FinancialCalculatorTest {
         expResult.add(0.00);
         expResult.add(1.00);
         expResult.add(2.00);
-        ArrayList<Double> result = FinancialCalculator.calculateCumulativeReturn(adjustedClosingPrices);
+        ArrayList<Double> result = SecurityCalculator.calculateCumulativeReturn(adjustedClosingPrices);
         assertEquals(expResult, result);
     }
 
+    /**
+     * Test of calculateCumulativeReturn method, of class FinancialCalculator.
+     * Test Case 4
+     */
     @Test
     public void testCalculateCumulativeReturnCase4() {
         System.out.println("calculateCumulativeReturn");
@@ -137,7 +149,7 @@ public class FinancialCalculatorTest {
         expResult.add(0.00);
         expResult.add(-0.3333333333333333);
         expResult.add(-0.6666666666666666);
-        ArrayList<Double> result = FinancialCalculator.calculateCumulativeReturn(adjustedClosingPrices);
+        ArrayList<Double> result = SecurityCalculator.calculateCumulativeReturn(adjustedClosingPrices);
         assertEquals(expResult, result);
     }
 }

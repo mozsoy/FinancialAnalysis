@@ -1,7 +1,7 @@
 
 import FileReaders.SecuritiesIniFileParser;
 import FinancialAPIs.YahooFinancialCSVFileDownloader;
-import FinancialCalculators.FinancialCalculator;
+import FinancialCalculators.SecurityCalculator;
 import GraphingTools.LineChartFrame;
 import Securities.Security;
 import java.awt.event.ActionEvent;
@@ -54,14 +54,15 @@ public class CumulativeReturnAnalysis extends Application {
                     ArrayList<Double> cumulativeReturn = new ArrayList<>();
                     for (String securityName : securitiesMap.keySet()) {
                         YahooFinancialCSVFileDownloader downloader
-                                = new YahooFinancialCSVFileDownloader(securityName, 
-                                        securitiesMap.get(securityName).getFromDate(), 
+                                = new YahooFinancialCSVFileDownloader(securityName,
+                                        securitiesMap.get(securityName).getFromDate(),
                                         securitiesMap.get(securityName).getToDate());
                         downloader.downloadCsvFileFromYahooFinancial();
                         adjustedClosingPrices = downloader.getAdjustedClosingPrices();
-                        cumulativeReturn = FinancialCalculator.calculateCumulativeReturn(adjustedClosingPrices);
+                        cumulativeReturn = SecurityCalculator.calculateCumulativeReturn(adjustedClosingPrices);
                         LineChartFrame<Double> plotter = new LineChartFrame(cumulativeReturn);
                         plotter.setyAxisLabel("Cumulative Return");
+                        plotter.setxAxisLabel("Days");
                         plotter.setTitle(securityName);
                         plotter.showLineChart();
                     }
@@ -72,7 +73,5 @@ public class CumulativeReturnAnalysis extends Application {
         frame.setSize(300, 120);
         frame.setLocation(800, 400);
         frame.setVisible(true);
-        System.out.println("Frame complete");
-        System.out.println("File read complete");
     }
 }

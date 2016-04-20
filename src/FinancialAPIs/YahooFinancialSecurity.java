@@ -1,46 +1,62 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package FinancialAPIs;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 /**
+ * The YahooFinancialSecurity class implements a security class with the
+ * features as in Yahoo Financial Web Site. The features of a
+ * YahooFinancialSecurity are date, opening price, highest price, lowest price,
+ * closing price, volume, and adjusted closing price.
  *
  * @author metehan
  */
 public class YahooFinancialSecurity {
 
-    private ArrayList<YahooFinancialSecurityDaily> dailySecurity;
+    // An ArrayList of daily reports of this security
+    private ArrayList<YahooFinancialSecurityDaily> dailySecurityReports;
+    // Total number of days in the report of this security
     private int numberOfDays;
 
+    /**
+     * Constructs a YahooFinancialSecurity object.
+     */
     public YahooFinancialSecurity() {
-        dailySecurity = new ArrayList<>();
+        dailySecurityReports = new ArrayList<>();
         numberOfDays = 0;
     }
 
+    /**
+     * Adds the report of a new day to the list of dailySecurityReports
+     *
+     * @param mDate
+     * @param mOpeningPrice
+     * @param mHighestPrice
+     * @param mLowestPrice
+     * @param mClosingPrice
+     * @param mVolume
+     * @param mAdjustedClosingPrice
+     */
     public void addOneDayToDailySecurity(String mDate,
             Double mOpeningPrice, Double mHighestPrice,
             Double mLowestPrice, Double mClosingPrice,
             Long mVolume, Double mAdjustedClosingPrice) {
 
+        // Construct a YahooFinancialSecurityDaily object
         YahooFinancialSecurityDaily newDayForThisSecurity
                 = new YahooFinancialSecurityDaily(mDate, mOpeningPrice,
                         mHighestPrice, mLowestPrice, mClosingPrice,
                         mVolume, mAdjustedClosingPrice);
 
-        getDailySecurity().add(newDayForThisSecurity);
+        getDailySecurityReports().add(newDayForThisSecurity);
         numberOfDays++;
     }
 
     /**
-     * @return the dailySecurity
+     * @return the dailySecurityReports
      */
-    public ArrayList<YahooFinancialSecurityDaily> getDailySecurity() {
-        return dailySecurity;
+    public ArrayList<YahooFinancialSecurityDaily> getDailySecurityReports() {
+        return dailySecurityReports;
     }
 
     /**
@@ -50,6 +66,9 @@ public class YahooFinancialSecurity {
         return numberOfDays;
     }
 
+    /**
+     * Implements one day report of a security
+     */
     class YahooFinancialSecurityDaily {
 
         private String date;
@@ -60,6 +79,17 @@ public class YahooFinancialSecurity {
         private Long volume;
         private Double adjustedClosingPrice;
 
+        /**
+         * Constructs a YahooFinancialSecurityDaily object
+         *
+         * @param mDate
+         * @param mOpeningPrice
+         * @param mHighestPrice
+         * @param mLowestPrice
+         * @param mClosingPrice
+         * @param mVolume
+         * @param mAdjustedClosingPrice
+         */
         public YahooFinancialSecurityDaily(String mDate,
                 Double mOpeningPrice, Double mHighestPrice, Double mLowestPrice,
                 Double mClosingPrice, Long mVolume, Double mAdjustedClosingPrice) {
