@@ -2,6 +2,7 @@ package FinancialAPIs;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 /**
  * The YahooFinancialSecurity class implements a security class with the
@@ -37,7 +38,7 @@ public class YahooFinancialSecurity {
      * @param mVolume
      * @param mAdjustedClosingPrice
      */
-    public void addOneDayToDailySecurity(String mDate,
+    public void addOneDayToSecurity(String mDate,
             Double mOpeningPrice, Double mHighestPrice,
             Double mLowestPrice, Double mClosingPrice,
             Long mVolume, Double mAdjustedClosingPrice) {
@@ -47,8 +48,7 @@ public class YahooFinancialSecurity {
                 = new YahooFinancialSecurityDaily(mDate, mOpeningPrice,
                         mHighestPrice, mLowestPrice, mClosingPrice,
                         mVolume, mAdjustedClosingPrice);
-
-        getDailySecurityReports().add(newDayForThisSecurity);
+        dailySecurityReports.add(newDayForThisSecurity);
         numberOfDays++;
     }
 
@@ -64,6 +64,26 @@ public class YahooFinancialSecurity {
      */
     public int getNumberOfDays() {
         return numberOfDays;
+    }
+
+    /**
+     * Compares two YahooFinancialSecurity objects
+     *
+     * @param obj to be compared
+     * @return a boolean result of the comparison
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!YahooFinancialSecurity.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+        YahooFinancialSecurity newSecurity = (YahooFinancialSecurity) obj;
+        for (int i = 0; i < this.getNumberOfDays(); i++) {
+            if (this.dailySecurityReports.get(i).equals(newSecurity.getDailySecurityReports().get(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -102,6 +122,42 @@ public class YahooFinancialSecurity {
             this.volume = mVolume;
             this.adjustedClosingPrice = mAdjustedClosingPrice;
 
+        }
+
+        /**
+         * Compares two YahooFinancialSecurityDaily objects
+         *
+         * @param obj to be compared
+         * @return a boolean result of the comparison
+         */
+        @Override
+        public boolean equals(Object obj) {
+            if (!YahooFinancialSecurityDaily.class.isAssignableFrom(obj.getClass())) {
+                return false;
+            }
+            YahooFinancialSecurityDaily newSecurityDaily = (YahooFinancialSecurityDaily) obj;
+            if (this.date == null ? newSecurityDaily.date != null : !this.date.equals(newSecurityDaily.date)) {
+                return false;
+            }
+            if (!Objects.equals(this.openingPrice, newSecurityDaily.openingPrice)) {
+                return false;
+            }
+            if (!Objects.equals(this.highestPrice, newSecurityDaily.highestPrice)) {
+                return false;
+            }
+            if (!Objects.equals(this.lowestPrice, newSecurityDaily.lowestPrice)) {
+                return false;
+            }
+            if (!Objects.equals(this.closingPrice, newSecurityDaily.closingPrice)) {
+                return false;
+            }
+            if (!Objects.equals(this.volume, newSecurityDaily.volume)) {
+                return false;
+            }
+            if (!Objects.equals(this.adjustedClosingPrice, newSecurityDaily.adjustedClosingPrice)) {
+                return false;
+            }
+            return true;
         }
 
         /**

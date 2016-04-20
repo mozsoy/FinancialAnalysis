@@ -83,7 +83,7 @@ public class YahooFinancialCSVFileDownloader {
     }
 
     /**
-     * Downloads the csv file
+     * Downloads the CSV file
      *
      * @return a YahooFinancialSecurity object
      */
@@ -118,15 +118,15 @@ public class YahooFinancialCSVFileDownloader {
                 this.volumes.add(volume);
                 Double adjustedClosingPrice = Double.parseDouble(fieldsInThisLine[6]);
                 this.adjustedClosingPrices.add(adjustedClosingPrice);
-                securityReport.addOneDayToDailySecurity(date, openingPrice,
+                securityReport.addOneDayToSecurity(date, openingPrice,
                         highestPrice, lowestPrice, closingPrice,
                         volume, adjustedClosingPrice);
             }
 
         } catch (MalformedURLException ex) {
-            Logger.getLogger(YahooFinancialCSVFileDownloader.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Yahoo Financial: Malformed URL Error");
         } catch (IOException ex) {
-            Logger.getLogger(YahooFinancialCSVFileDownloader.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Yahoo Financial: CSV File not found error");
         }
         return securityReport;
     }

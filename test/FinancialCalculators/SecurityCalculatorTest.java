@@ -152,4 +152,33 @@ public class SecurityCalculatorTest {
         ArrayList<Double> result = SecurityCalculator.calculateCumulativeReturn(adjustedClosingPrices);
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of calculateReturn method, of class SecurityCalculator.
+     */
+    @Test
+    public void testCalculateReturn() {
+        System.out.println("calculateReturn");
+        Double currentPrice = null;
+        Double originalPrice = null;
+        Double expResult = null;
+        Double result = SecurityCalculator.calculateReturn(currentPrice, originalPrice);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of calculateCumulativeReturn method, of class SecurityCalculator.
+     */
+    @Test
+    public void testCalculateCumulativeReturn() {
+        System.out.println("calculateCumulativeReturn");
+        ArrayList<Double> adjustedClosingPrices = null;
+        ArrayList<Double> expResult = null;
+        ArrayList<Double> result = SecurityCalculator.calculateCumulativeReturn(adjustedClosingPrices);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }
