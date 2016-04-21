@@ -17,7 +17,10 @@ public class SecurityCalculator {
      * @param originalPrice original price of the security
      * @return return of the security
      */
-    public static Double calculateReturn(Double currentPrice, Double originalPrice) {
+    public static double calculateReturn(double currentPrice, double originalPrice) {
+        if (originalPrice == 0.00) {
+            throw new ArithmeticException("Security Calculator: Dividing by zero error");
+        }
         return (currentPrice - originalPrice) / originalPrice;
     }
 

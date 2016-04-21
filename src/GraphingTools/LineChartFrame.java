@@ -60,6 +60,7 @@ public class LineChartFrame<Object> extends JFrame {
                 // Defining the axes
                 final CategoryAxis xAxis = new CategoryAxis();
                 final NumberAxis yAxis = new NumberAxis();
+                yAxis.setAutoRanging(true);
                 if (xAxisLabel != null) {
                     xAxis.setLabel(xAxisLabel);
                 }

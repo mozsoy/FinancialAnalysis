@@ -1,8 +1,6 @@
 package FinancialAPIs;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.Objects;
 
 /**
  * The YahooFinancialSecurity class implements a security class with the
@@ -39,24 +37,17 @@ public class YahooFinancialSecurity {
      * @param mAdjustedClosingPrice
      */
     public void addOneDayToSecurity(String mDate,
-            Double mOpeningPrice, Double mHighestPrice,
-            Double mLowestPrice, Double mClosingPrice,
-            Long mVolume, Double mAdjustedClosingPrice) {
+            double mOpeningPrice, double mHighestPrice,
+            double mLowestPrice, double mClosingPrice,
+            long mVolume, double mAdjustedClosingPrice) {
 
         // Construct a YahooFinancialSecurityDaily object
         YahooFinancialSecurityDaily newDayForThisSecurity
                 = new YahooFinancialSecurityDaily(mDate, mOpeningPrice,
                         mHighestPrice, mLowestPrice, mClosingPrice,
                         mVolume, mAdjustedClosingPrice);
-        dailySecurityReports.add(newDayForThisSecurity);
+        dailySecurityReports.add(0, newDayForThisSecurity);
         numberOfDays++;
-    }
-
-    /**
-     * @return the dailySecurityReports
-     */
-    public ArrayList<YahooFinancialSecurityDaily> getDailySecurityReports() {
-        return dailySecurityReports;
     }
 
     /**
@@ -79,7 +70,7 @@ public class YahooFinancialSecurity {
         }
         YahooFinancialSecurity newSecurity = (YahooFinancialSecurity) obj;
         for (int i = 0; i < this.getNumberOfDays(); i++) {
-            if (this.dailySecurityReports.get(i).equals(newSecurity.getDailySecurityReports().get(i))) {
+            if (this.dailySecurityReports.get(i).equals(newSecurity.dailySecurityReports.get(i))) {
                 return true;
             }
         }
@@ -89,15 +80,15 @@ public class YahooFinancialSecurity {
     /**
      * Implements one day report of a security
      */
-    class YahooFinancialSecurityDaily {
+    private class YahooFinancialSecurityDaily {
 
         private String date;
-        private Double openingPrice;
-        private Double highestPrice;
-        private Double lowestPrice;
-        private Double closingPrice;
-        private Long volume;
-        private Double adjustedClosingPrice;
+        private double openingPrice;
+        private double highestPrice;
+        private double lowestPrice;
+        private double closingPrice;
+        private long volume;
+        private double adjustedClosingPrice;
 
         /**
          * Constructs a YahooFinancialSecurityDaily object
@@ -111,8 +102,8 @@ public class YahooFinancialSecurity {
          * @param mAdjustedClosingPrice
          */
         public YahooFinancialSecurityDaily(String mDate,
-                Double mOpeningPrice, Double mHighestPrice, Double mLowestPrice,
-                Double mClosingPrice, Long mVolume, Double mAdjustedClosingPrice) {
+                double mOpeningPrice, double mHighestPrice, double mLowestPrice,
+                double mClosingPrice, long mVolume, double mAdjustedClosingPrice) {
 
             this.date = mDate;
             this.openingPrice = mOpeningPrice;
@@ -139,22 +130,22 @@ public class YahooFinancialSecurity {
             if (this.date == null ? newSecurityDaily.date != null : !this.date.equals(newSecurityDaily.date)) {
                 return false;
             }
-            if (!Objects.equals(this.openingPrice, newSecurityDaily.openingPrice)) {
+            if (this.openingPrice != newSecurityDaily.openingPrice) {
                 return false;
             }
-            if (!Objects.equals(this.highestPrice, newSecurityDaily.highestPrice)) {
+            if (this.highestPrice != newSecurityDaily.highestPrice) {
                 return false;
             }
-            if (!Objects.equals(this.lowestPrice, newSecurityDaily.lowestPrice)) {
+            if (this.lowestPrice != newSecurityDaily.lowestPrice) {
                 return false;
             }
-            if (!Objects.equals(this.closingPrice, newSecurityDaily.closingPrice)) {
+            if (this.closingPrice != newSecurityDaily.closingPrice) {
                 return false;
             }
-            if (!Objects.equals(this.volume, newSecurityDaily.volume)) {
+            if (this.volume != newSecurityDaily.volume) {
                 return false;
             }
-            if (!Objects.equals(this.adjustedClosingPrice, newSecurityDaily.adjustedClosingPrice)) {
+            if (this.adjustedClosingPrice != newSecurityDaily.adjustedClosingPrice) {
                 return false;
             }
             return true;
@@ -168,24 +159,10 @@ public class YahooFinancialSecurity {
         }
 
         /**
-         * @param date the date to set
-         */
-        public void setDate(String date) {
-            this.date = date;
-        }
-
-        /**
          * @return the openingPrice
          */
         public Double getOpeningPrice() {
             return openingPrice;
-        }
-
-        /**
-         * @param openingPrice the openingPrice to set
-         */
-        public void setOpeningPrice(Double openingPrice) {
-            this.openingPrice = openingPrice;
         }
 
         /**
@@ -196,24 +173,10 @@ public class YahooFinancialSecurity {
         }
 
         /**
-         * @param highestPrice the highestPrice to set
-         */
-        public void setHighestPrice(Double highestPrice) {
-            this.highestPrice = highestPrice;
-        }
-
-        /**
          * @return the lowestPrice
          */
         public Double getLowestPrice() {
             return lowestPrice;
-        }
-
-        /**
-         * @param lowestPrice the lowestPrice to set
-         */
-        public void setLowestPrice(Double lowestPrice) {
-            this.lowestPrice = lowestPrice;
         }
 
         /**
@@ -224,13 +187,6 @@ public class YahooFinancialSecurity {
         }
 
         /**
-         * @param closingPrice the closingPrice to set
-         */
-        public void setClosingPrice(Double closingPrice) {
-            this.closingPrice = closingPrice;
-        }
-
-        /**
          * @return the volume
          */
         public Long getVolume() {
@@ -238,24 +194,10 @@ public class YahooFinancialSecurity {
         }
 
         /**
-         * @param volume the volume to set
-         */
-        public void setVolume(Long volume) {
-            this.volume = volume;
-        }
-
-        /**
          * @return the adjustedClosingPrice
          */
         public Double getAdjustedClosingPrice() {
             return adjustedClosingPrice;
-        }
-
-        /**
-         * @param adjustedClosingPrice the adjustedClosingPrice to set
-         */
-        public void setAdjustedClosingPrice(Double adjustedClosingPrice) {
-            this.adjustedClosingPrice = adjustedClosingPrice;
         }
     }
 }

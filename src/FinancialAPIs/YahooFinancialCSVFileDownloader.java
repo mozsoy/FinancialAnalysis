@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,9 +59,9 @@ public class YahooFinancialCSVFileDownloader {
     }
 
     /**
-     * Prepares a string representation of the url that downloads the csv file
+     * Prepares a string representation of the url that downloads the CSV file
      *
-     * @return a string representation of the url that downloads the csv file
+     * @return a string representation of the url that downloads the CSV file
      */
     private String prepareDownloadUrl() {
 
@@ -80,6 +81,7 @@ public class YahooFinancialCSVFileDownloader {
                 + "&g=d"
                 + "ignore=.csv";
         return url;
+
     }
 
     /**
@@ -88,7 +90,7 @@ public class YahooFinancialCSVFileDownloader {
      * @return a YahooFinancialSecurity object
      */
     public YahooFinancialSecurity downloadCsvFileFromYahooFinancial() {
-
+        // The security report to be returned by this method
         YahooFinancialSecurity securityReport = new YahooFinancialSecurity();
         String downloadUrlAsString = prepareDownloadUrl();
         try {
@@ -105,19 +107,19 @@ public class YahooFinancialCSVFileDownloader {
                 String line = csvFileScanner.nextLine();
                 String[] fieldsInThisLine = line.split(",");
                 String date = fieldsInThisLine[0];
-                this.dates.add(date);
+                this.dates.add(0, date);
                 Double openingPrice = Double.parseDouble(fieldsInThisLine[1]);
-                this.openingPrices.add(openingPrice);
+                this.openingPrices.add(0, openingPrice);
                 Double highestPrice = Double.parseDouble(fieldsInThisLine[2]);
-                this.highestPrices.add(highestPrice);
+                this.highestPrices.add(0, highestPrice);
                 Double lowestPrice = Double.parseDouble(fieldsInThisLine[3]);
-                this.lowestPrices.add(lowestPrice);
+                this.lowestPrices.add(0, lowestPrice);
                 Double closingPrice = Double.parseDouble(fieldsInThisLine[4]);
-                this.closingPrices.add(closingPrice);
+                this.closingPrices.add(0, closingPrice);
                 Long volume = Long.parseLong(fieldsInThisLine[5]);
-                this.volumes.add(volume);
+                this.volumes.add(0, volume);
                 Double adjustedClosingPrice = Double.parseDouble(fieldsInThisLine[6]);
-                this.adjustedClosingPrices.add(adjustedClosingPrice);
+                this.adjustedClosingPrices.add(0, adjustedClosingPrice);
                 securityReport.addOneDayToSecurity(date, openingPrice,
                         highestPrice, lowestPrice, closingPrice,
                         volume, adjustedClosingPrice);

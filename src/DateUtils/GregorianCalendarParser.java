@@ -20,7 +20,8 @@ public class GregorianCalendarParser {
 
         GregorianCalendar gregorianDate = new GregorianCalendar();
         gregorianDate.set(Calendar.YEAR, Integer.parseInt(date.substring(0, 4)));
-        gregorianDate.set(Calendar.MONTH, Integer.parseInt(date.substring(4, 6)));
+        // Months in GreagorianCalendar starts from JAN = 0 
+        gregorianDate.set(Calendar.MONTH, Integer.parseInt(date.substring(4, 6))-1);
         gregorianDate.set(Calendar.DAY_OF_MONTH, Integer.parseInt(date.substring(6)));
 
         return gregorianDate;

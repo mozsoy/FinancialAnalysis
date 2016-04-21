@@ -23,6 +23,9 @@ import org.junit.rules.ExpectedException;
  */
 public class YahooFinancialCSVFileDownloaderTest {
 
+    // A YahooFinancialCSVFileDownloader object to be used in getter methods
+    YahooFinancialCSVFileDownloader instanceToBeUsedInGetterTests;
+
     public YahooFinancialCSVFileDownloaderTest() {
     }
 
@@ -36,6 +39,9 @@ public class YahooFinancialCSVFileDownloaderTest {
 
     @Before
     public void setUp() {
+        instanceToBeUsedInGetterTests
+                = new YahooFinancialCSVFileDownloader("SPY", "20151208", "20151209");
+        instanceToBeUsedInGetterTests.downloadCsvFileFromYahooFinancial();
     }
 
     @After
@@ -62,11 +68,11 @@ public class YahooFinancialCSVFileDownloaderTest {
      */
     public YahooFinancialSecurity mock2YahooFinancialSecurity() {
         YahooFinancialSecurity security = new YahooFinancialSecurity();
-        security.addOneDayToSecurity("2015-12-08", 206.490005, 208.289993,
-                205.779999, 206.949997, (long) 103372400, 204.670011);
         security.addOneDayToSecurity("2015-12-09", 206.190002, 208.679993,
                 204.179993, 205.339996, (long) 162401500, 203.077748
         );
+        security.addOneDayToSecurity("2015-12-08", 206.490005, 208.289993,
+                205.779999, 206.949997, (long) 103372400, 204.670011);
         return security;
     }
 
@@ -78,7 +84,7 @@ public class YahooFinancialCSVFileDownloaderTest {
     @Test
     public void testDownloadCsvFileFromYahooFinancialCase1() {
         YahooFinancialCSVFileDownloader instance
-                = new YahooFinancialCSVFileDownloader("SPY", "20151108", "20151108");
+                = new YahooFinancialCSVFileDownloader("SPY", "20151208", "20151208");
         YahooFinancialSecurity expResult = mock1YahooFinancialSecurity();
         YahooFinancialSecurity result = instance.downloadCsvFileFromYahooFinancial();
         assertEquals(true, expResult.equals(result));
@@ -92,7 +98,7 @@ public class YahooFinancialCSVFileDownloaderTest {
     @Test
     public void testDownloadCsvFileFromYahooFinancialCase2() {
         YahooFinancialCSVFileDownloader instance
-                = new YahooFinancialCSVFileDownloader("SPY", "20151108", "20151109");
+                = new YahooFinancialCSVFileDownloader("SPY", "20151208", "20151209");
         YahooFinancialSecurity expResult = mock2YahooFinancialSecurity();
         YahooFinancialSecurity result = instance.downloadCsvFileFromYahooFinancial();
         assertEquals(true, expResult.equals(result));
@@ -107,7 +113,7 @@ public class YahooFinancialCSVFileDownloaderTest {
     public void testDownloadCsvFileFromYahooFinancialCase3() {
         try {
             YahooFinancialCSVFileDownloader instance
-                    = new YahooFinancialCSVFileDownloader("Wrong Security Name", "20151108", "20151108");
+                    = new YahooFinancialCSVFileDownloader("Wrong Security Name", "20151208", "20151208");
             YahooFinancialSecurity result = instance.downloadCsvFileFromYahooFinancial();
         } catch (Exception e) {
             assertEquals(e.getMessage(), "Yahoo Financial: CSV File not found error");
@@ -124,7 +130,7 @@ public class YahooFinancialCSVFileDownloaderTest {
     public void testDownloadCsvFileFromYahooFinancialCase4() {
         try {
             YahooFinancialCSVFileDownloader instance
-                    = new YahooFinancialCSVFileDownloader("SPY", "Wrong from date", "20151108");
+                    = new YahooFinancialCSVFileDownloader("SPY", "Wrong from date", "20151208");
             YahooFinancialSecurity result = instance.downloadCsvFileFromYahooFinancial();
         } catch (Exception e) {
             assertEquals(e.getClass(), NumberFormatException.class);
@@ -140,7 +146,7 @@ public class YahooFinancialCSVFileDownloaderTest {
     public void testDownloadCsvFileFromYahooFinancialCase5() {
         try {
             YahooFinancialCSVFileDownloader instance
-                    = new YahooFinancialCSVFileDownloader("SPY", "20151108", "Wrong to date");
+                    = new YahooFinancialCSVFileDownloader("SPY", "20151208", "Wrong to date");
             YahooFinancialSecurity result = instance.downloadCsvFileFromYahooFinancial();
         } catch (Exception e) {
             assertEquals(e.getClass(), NumberFormatException.class);
@@ -153,12 +159,11 @@ public class YahooFinancialCSVFileDownloaderTest {
      */
     @Test
     public void testGetNameOfSecurityCase1() {
-        YahooFinancialCSVFileDownloader instance = null;
-        String expResult = "";
+        YahooFinancialCSVFileDownloader instance
+                = new YahooFinancialCSVFileDownloader("SPY", "20151208", "20151209");
+        String expResult = "SPY";
         String result = instance.getNameOfSecurity();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -166,13 +171,11 @@ public class YahooFinancialCSVFileDownloaderTest {
      */
     @Test
     public void testGetFromDate() {
-        System.out.println("getFromDate");
-        YahooFinancialCSVFileDownloader instance = null;
-        String expResult = "";
+        YahooFinancialCSVFileDownloader instance
+                = new YahooFinancialCSVFileDownloader("SPY", "20151208", "20151209");
+        String expResult = "20151208";
         String result = instance.getFromDate();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -180,13 +183,11 @@ public class YahooFinancialCSVFileDownloaderTest {
      */
     @Test
     public void testGetToDate() {
-        System.out.println("getToDate");
-        YahooFinancialCSVFileDownloader instance = null;
-        String expResult = "";
+        YahooFinancialCSVFileDownloader instance
+                = new YahooFinancialCSVFileDownloader("SPY", "20151208", "20151209");
+        String expResult = "20151209";
         String result = instance.getToDate();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -194,13 +195,11 @@ public class YahooFinancialCSVFileDownloaderTest {
      */
     @Test
     public void testGetDates() {
-        System.out.println("getDates");
-        YahooFinancialCSVFileDownloader instance = null;
-        ArrayList<String> expResult = null;
-        ArrayList<String> result = instance.getDates();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ArrayList<String> expResult = new ArrayList<>();
+        expResult.add("2015-12-08");
+        expResult.add("2015-12-09");
+        ArrayList<String> result = instanceToBeUsedInGetterTests.getDates();
+        assertEquals(true, expResult.equals(result));
     }
 
     /**
@@ -209,13 +208,11 @@ public class YahooFinancialCSVFileDownloaderTest {
      */
     @Test
     public void testGetOpeningPrices() {
-        System.out.println("getOpeningPrices");
-        YahooFinancialCSVFileDownloader instance = null;
-        ArrayList<Double> expResult = null;
-        ArrayList<Double> result = instance.getOpeningPrices();
+        ArrayList<Double> expResult = new ArrayList<>();
+        expResult.add(206.490005);
+        expResult.add(206.190002);
+        ArrayList<Double> result = instanceToBeUsedInGetterTests.getOpeningPrices();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -224,13 +221,11 @@ public class YahooFinancialCSVFileDownloaderTest {
      */
     @Test
     public void testGetHighestPrices() {
-        System.out.println("getHighestPrices");
-        YahooFinancialCSVFileDownloader instance = null;
-        ArrayList<Double> expResult = null;
-        ArrayList<Double> result = instance.getHighestPrices();
+        ArrayList<Double> expResult = new ArrayList<>();
+        expResult.add(208.289993);
+        expResult.add(208.679993);
+        ArrayList<Double> result = instanceToBeUsedInGetterTests.getHighestPrices();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -238,13 +233,11 @@ public class YahooFinancialCSVFileDownloaderTest {
      */
     @Test
     public void testGetLowestPrices() {
-        System.out.println("getLowestPrices");
-        YahooFinancialCSVFileDownloader instance = null;
-        ArrayList<Double> expResult = null;
-        ArrayList<Double> result = instance.getLowestPrices();
+        ArrayList<Double> expResult = new ArrayList<>();
+        expResult.add(205.779999);
+        expResult.add(204.179993);
+        ArrayList<Double> result = instanceToBeUsedInGetterTests.getLowestPrices();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -253,13 +246,11 @@ public class YahooFinancialCSVFileDownloaderTest {
      */
     @Test
     public void testGetClosingPrices() {
-        System.out.println("getClosingPrices");
-        YahooFinancialCSVFileDownloader instance = null;
-        ArrayList<Double> expResult = null;
-        ArrayList<Double> result = instance.getClosingPrices();
+        ArrayList<Double> expResult = new ArrayList<>();
+        expResult.add(206.949997);
+        expResult.add(205.339996);
+        ArrayList<Double> result = instanceToBeUsedInGetterTests.getClosingPrices();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -267,13 +258,11 @@ public class YahooFinancialCSVFileDownloaderTest {
      */
     @Test
     public void testGetVolumes() {
-        System.out.println("getVolumes");
-        YahooFinancialCSVFileDownloader instance = null;
-        ArrayList<Long> expResult = null;
-        ArrayList<Long> result = instance.getVolumes();
+        ArrayList<Long> expResult = new ArrayList<>();
+        expResult.add((long) 103372400);
+        expResult.add((long) 162401500);
+        ArrayList<Long> result = instanceToBeUsedInGetterTests.getVolumes();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -282,13 +271,11 @@ public class YahooFinancialCSVFileDownloaderTest {
      */
     @Test
     public void testGetAdjustedClosingPrices() {
-        System.out.println("getAdjustedClosingPrices");
-        YahooFinancialCSVFileDownloader instance = null;
-        ArrayList<Double> expResult = null;
-        ArrayList<Double> result = instance.getAdjustedClosingPrices();
+        ArrayList<Double> expResult = new ArrayList<>();
+        expResult.add(204.670011);
+        expResult.add(203.077748);
+        ArrayList<Double> result = instanceToBeUsedInGetterTests.getAdjustedClosingPrices();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }

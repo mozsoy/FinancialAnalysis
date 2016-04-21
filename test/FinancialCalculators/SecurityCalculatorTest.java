@@ -38,47 +38,57 @@ public class SecurityCalculatorTest {
     }
 
     /**
-     * Test of calculateReturn method, of class FinancialCalculator. 
-     * Test Case 1
+     * Test of calculateReturn method, of class FinancialCalculator. Test Case 1
      */
     @Test
     public void testCalculateReturnCase1() {
-        System.out.println("calculateReturn");
-        Double currentPrice = 1.00;
-        Double originalPrice = 1.00;
-        Double expResult = 0.00;
-        Double result = SecurityCalculator.calculateReturn(currentPrice, originalPrice);
-        assertEquals(expResult, result);
+        double currentPrice = 1.00;
+        double originalPrice = 1.00;
+        double expResult = 0.00;
+        double result = SecurityCalculator.calculateReturn(currentPrice, originalPrice);
+        assertEquals(expResult, result, DELTA);
     }
 
     /**
-     * Test of calculateReturn method, of class FinancialCalculator. 
-     * Test Case 2
+     * Test of calculateReturn method, of class FinancialCalculator. Test Case 2
      */
     @Test
     public void testCalculateReturnCase2() {
-        System.out.println("calculateReturn");
-        Double currentPrice = 15.84;
-        Double originalPrice = 10.56;
-        Double expResult = 0.50;
-        Double result = SecurityCalculator.calculateReturn(currentPrice, originalPrice);
+        double currentPrice = 15.84;
+        double originalPrice = 10.56;
+        double expResult = 0.50;
+        double result = SecurityCalculator.calculateReturn(currentPrice, originalPrice);
         assertEquals(expResult, result, DELTA);
 
     }
 
     /**
-     * Test of calculateReturn method, of class FinancialCalculator. 
-     * Test Case 3
+     * Test of calculateReturn method, of class FinancialCalculator. Test Case 3
      */
     @Test
     public void testCalculateReturnCase3() {
-        System.out.println("calculateReturn");
-        Double currentPrice = 3.45;
-        Double originalPrice = 6.76;
-        Double expResult = -0.489644970414;
-        Double result = SecurityCalculator.calculateReturn(currentPrice, originalPrice);
+        double currentPrice = 3.45;
+        double originalPrice = 6.76;
+        double expResult = -0.489644970414;
+        double result = SecurityCalculator.calculateReturn(currentPrice, originalPrice);
         assertEquals(expResult, result, DELTA);
 
+    }
+
+    /**
+     * Test of calculateReturn method, of class FinancialCalculator. Test Case
+     * 4: Divide by zero error case
+     */
+    @Test
+    public void testCalculateReturnCase4() {
+        try {
+            double currentPrice = 3.45;
+            double originalPrice = 0.00;
+            double expResult = -0.489644970414;
+            double result = SecurityCalculator.calculateReturn(currentPrice, originalPrice);
+        } catch (Exception e) {
+            assertEquals(true, e.getMessage().equals("Security Calculator: Dividing by zero error"));
+        }
     }
 
     /**
@@ -87,7 +97,6 @@ public class SecurityCalculatorTest {
      */
     @Test
     public void testCalculateCumulativeReturnCase1() {
-        System.out.println("calculateCumulativeReturn");
         ArrayList<Double> adjustedClosingPrices = new ArrayList<>();
         adjustedClosingPrices.add(1.00);
         adjustedClosingPrices.add(1.00);
@@ -106,7 +115,6 @@ public class SecurityCalculatorTest {
      */
     @Test
     public void testCalculateCumulativeReturnCase2() {
-        System.out.println("calculateCumulativeReturn");
         ArrayList<Double> adjustedClosingPrices = new ArrayList<>();
         adjustedClosingPrices.add(5.00);
         ArrayList<Double> expResult = new ArrayList<>();
@@ -121,7 +129,6 @@ public class SecurityCalculatorTest {
      */
     @Test
     public void testCalculateCumulativeReturnCase3() {
-        System.out.println("calculateCumulativeReturn");
         ArrayList<Double> adjustedClosingPrices = new ArrayList<>();
         adjustedClosingPrices.add(1.00);
         adjustedClosingPrices.add(2.00);
@@ -140,7 +147,6 @@ public class SecurityCalculatorTest {
      */
     @Test
     public void testCalculateCumulativeReturnCase4() {
-        System.out.println("calculateCumulativeReturn");
         ArrayList<Double> adjustedClosingPrices = new ArrayList<>();
         adjustedClosingPrices.add(3.00);
         adjustedClosingPrices.add(2.00);
@@ -151,34 +157,5 @@ public class SecurityCalculatorTest {
         expResult.add(-0.6666666666666666);
         ArrayList<Double> result = SecurityCalculator.calculateCumulativeReturn(adjustedClosingPrices);
         assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of calculateReturn method, of class SecurityCalculator.
-     */
-    @Test
-    public void testCalculateReturn() {
-        System.out.println("calculateReturn");
-        Double currentPrice = null;
-        Double originalPrice = null;
-        Double expResult = null;
-        Double result = SecurityCalculator.calculateReturn(currentPrice, originalPrice);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of calculateCumulativeReturn method, of class SecurityCalculator.
-     */
-    @Test
-    public void testCalculateCumulativeReturn() {
-        System.out.println("calculateCumulativeReturn");
-        ArrayList<Double> adjustedClosingPrices = null;
-        ArrayList<Double> expResult = null;
-        ArrayList<Double> result = SecurityCalculator.calculateCumulativeReturn(adjustedClosingPrices);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }
