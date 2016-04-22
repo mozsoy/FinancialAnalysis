@@ -3,7 +3,10 @@ package FileReaders;
 import Securities.Security;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class SecuritiesIniFileParser {
 
-    private String iniFilePath; // Path for the INI file
+    private final String iniFilePath; // Path for the INI file
 
     /**
      * Constructs an SecuritiesIniFileParser object for the INI file at the
@@ -25,6 +28,9 @@ public class SecuritiesIniFileParser {
      * @param path the absolute path of the INI file.
      */
     public SecuritiesIniFileParser(String path) {
+        if (path == null) {
+            throw new NullPointerException("error: empty path");
+        }
         this.iniFilePath = path;
     }
 
@@ -56,8 +62,10 @@ public class SecuritiesIniFileParser {
                 Security newSecurity = new Security(nameOfSecurity, fromDate, toDate);
                 securitiesMap.put(nameOfSecurity, newSecurity);
             }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(SecuritiesIniFileParser.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) { // File not found
+            System.out.println("error: ini file not found at the specified path");
+        } catch (NoSuchElementException ex) { // Mis-formatted INI file
+            System.out.println("error: ini file mis-formatted");
         }
         return securitiesMap;
     }

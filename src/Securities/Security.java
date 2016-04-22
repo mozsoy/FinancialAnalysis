@@ -1,8 +1,8 @@
 package Securities;
 
 /**
- * The Security class implements a security as a financial instrument
- * .
+ * The Security class implements a security as a financial instrument .
+ *
  * @author metehan
  */
 public class Security {
@@ -64,6 +64,30 @@ public class Security {
      */
     public void setToDate(String toDate) {
         this.toDate = toDate;
+    }
+
+    /**
+     * Compares two Security objects
+     *
+     * @param obj to be compared
+     * @return a boolean result of the comparison
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!obj.getClass().isAssignableFrom(Security.class)) {
+            return false;
+        }
+        Security anotherSecurity = (Security) obj;
+        if (!this.name.equals(anotherSecurity.name)) {
+            return false;
+        }
+        if (!this.fromDate.equals(anotherSecurity.fromDate)) {
+            return false;
+        }
+        if (!this.toDate.equals(anotherSecurity.toDate)) {
+            return false;
+        }
+        return true;
     }
 
     /**

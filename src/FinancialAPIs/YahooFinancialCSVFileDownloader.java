@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
-import java.util.Stack;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * The YahooFinancialCSVFileDownloader class downloads a csv file from Yahoo
@@ -81,7 +78,6 @@ public class YahooFinancialCSVFileDownloader {
                 + "&g=d"
                 + "ignore=.csv";
         return url;
-
     }
 
     /**
